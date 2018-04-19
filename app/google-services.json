@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "45621494795",
+    "firebase_url": "https://claimer-15561.firebaseio.com",
+    "project_id": "claimer-15561",
+    "storage_bucket": "claimer-15561.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:45621494795:android:49ea0c74e135b62f",
+        "android_client_info": {
+          "package_name": "ananda.com.claimer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "45621494795-1alakoh7vhntbo6mivoipcjfkdkkib3a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ananda.com.claimer",
+            "certificate_hash": "b5b420ce3f348a868f1772bb7aef236932c62e45"
+          }
+        },
+        {
+          "client_id": "45621494795-bhpbnsvrnbce41q1j3hgp8c7v7uv828t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-5-Vrx7e3jvT99QDczjaraTy1LGYdCXk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "45621494795-bhpbnsvrnbce41q1j3hgp8c7v7uv828t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

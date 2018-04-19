@@ -1,0 +1,69 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ScrollView01"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:scrollbars="vertical">
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:orientation="vertical"
+        android:layout_height="fill_parent">
+
+        <EditText
+            android:id="@+id/Itemname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            tools:hint="Item Name" />
+
+        <EditText
+            android:id="@+id/Itemcost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Item Cost"
+            android:inputType="numberDecimal" />
+
+        <EditText
+            android:id="@+id/ItemId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Item Id"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/ModelNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Model Number"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/SereialNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Sereial Number"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/RoomType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Room Type"
+            android:inputType="textPersonName" />
+
+        <Button
+            android:id="@+id/Takepicture"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Take Picture" />
+
+    </LinearLayout>
+
+</ScrollView>
