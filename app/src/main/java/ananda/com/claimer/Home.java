@@ -109,10 +109,9 @@ public class Home extends AppCompatActivity {
 
         }
         catch(Exception ex){
-            Log.d("Bull Shit Exception",ex.toString());
+            Log.d("Exception",ex.toString());
 
         }
-        Log.d("No Idea what's going on","F***");
 
         StorageReference imagesRef = storageRef.child("images/"+file.getLastPathSegment());
         UploadTask uploadTask = imagesRef.putFile(file);

@@ -46,7 +46,6 @@ public class viewItems extends AppCompatActivity {
 
         public void updateData(){
 
-
         }
 
             @Override
@@ -54,8 +53,6 @@ public class viewItems extends AppCompatActivity {
 
             }
         });
-
-
 
 
     }
