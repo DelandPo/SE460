@@ -50,6 +50,8 @@ public class LobbyActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Go To Email Activity
+                Intent emailIntent = new Intent(LobbyActivity.this, CreatePDF.class);
+                LobbyActivity.this.startActivity(emailIntent);
             }
         });
 

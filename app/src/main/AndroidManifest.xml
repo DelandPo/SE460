@@ -32,7 +32,8 @@
         </provider>
 
         <activity android:name=".viewItems" />
-        <activity android:name=".LobbyActivity"></activity>
+        <activity android:name=".LobbyActivity" />
+        <activity android:name=".CreatePDF"></activity>
     </application>
 
 </manifest>
