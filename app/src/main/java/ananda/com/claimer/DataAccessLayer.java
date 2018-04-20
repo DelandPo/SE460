@@ -18,6 +18,7 @@ public class DataAccessLayer {
     }
 
     public static ArrayList<Items> GetAllItems(){
+
         return FirebaseDataItems;
     }
 

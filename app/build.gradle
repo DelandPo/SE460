@@ -19,7 +19,7 @@ android {
 }
 
 dependencies {
-    compile 'com.itextpdf:itextg:5.5.8'
+    compile 'com.itextpdf:itextg:5.5.8'/** required for CreatePDF **/
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:26.1.0'
