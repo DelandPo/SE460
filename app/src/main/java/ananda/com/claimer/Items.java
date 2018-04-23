@@ -47,6 +47,19 @@ public class Items {
     }
 
 
+
+    public  String ItemDetails(){
+
+        String nl = " \n";
+        return "Item Name : " + getItemName() + nl +
+                "Item Cost : $" + getItemName() + nl +
+                "Item Id : " + getItemID() + nl +
+                "Model Number : " + getModelNumber() + nl +
+                "Sereial Number : " + getSerialNumber() + nl +
+                "Room Type : " + getRoomType() + nl +
+                "Picture URL : " + getPictureURL();
+    }
+
     public void setUserID(String uid){
         userID = uid;
     }

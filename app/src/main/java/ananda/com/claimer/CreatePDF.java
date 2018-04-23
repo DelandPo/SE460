@@ -1,6 +1,7 @@
 package ananda.com.claimer;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -9,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -30,7 +32,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -43,7 +47,8 @@ public class CreatePDF extends AppCompatActivity {
     private static final String TAG = "PdfCreatorActivity";
     //public static final String IMG = "/storage/emulated/0/Download/Img.jpg";
     private final int REQUEST_CODE_ASK_PERMISSIONS = 111;
-
+    public Uri outputFileUri;
+    public Context context = this;
     private EditText  emailAddress;
     private Button mCreateButton;
     private File pdfFile;
@@ -57,14 +62,28 @@ public class CreatePDF extends AppCompatActivity {
 
 
     protected void onCreate(Bundle savedInstanceState) {
+        final String dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/claimer/";
+        Log.d("Directory",dir);
+        File newdir = new File(dir);
+        newdir.mkdirs();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pdfcreator);
         File file = new File(DEST);
         file.getParentFile().mkdirs();
-
+        items = data.GetAllItems();
         emailAddress = (EditText) findViewById(R.id.txtEmail);
         mCreateButton = (Button) findViewById(R.id.button_create);
-
+        String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
+        String reportFile = dir+ timeStamp + ".pdf";
+        File newfile = new File(reportFile);
+        try {
+            newfile.createNewFile();
+        }
+        catch (IOException e)
+        {
+        }
+        outputFileUri = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider",newfile);
         mCreateButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (emailAddress.getText().toString().isEmpty()){
@@ -76,7 +95,7 @@ public class CreatePDF extends AppCompatActivity {
                 try {
 
                     createPdfWrapper();
-
+                    Log.d("Email log", "Email");
                 }catch(IOException io){
                     io.printStackTrace();
                 }catch(DocumentException d){
@@ -114,15 +133,7 @@ public class CreatePDF extends AppCompatActivity {
             }
             return;
         }else {
-            try{
-                Toast.makeText(this, "Calling ceatePdf", Toast.LENGTH_SHORT).show();
-                createPdf();
-
-            }catch(DocumentException d){
-                d.printStackTrace();
-            }catch(IOException io){
-                io.printStackTrace();
-            }
+            sendEmail();
         }
     }
     @Override
@@ -158,12 +169,13 @@ public class CreatePDF extends AppCompatActivity {
     }
 
     public void createPdf() throws IOException, DocumentException {
-        File docsFolder = new File(Environment.getExternalStorageDirectory() + "/SE460");
+        /*File docsFolder = new File(Environment.getExternalStorageDirectory() + "/SE460");
         if (!docsFolder.exists()) {
             docsFolder.mkdir();
             Log.i(TAG, "Created a new directory for PDF");
         }
-        pdfFile = new File(docsFolder.getAbsolutePath(),"InventoryList.pdf");
+        */
+        pdfFile = new File(outputFileUri.getPath());
         OutputStream output = new FileOutputStream(pdfFile);
 
 
@@ -172,23 +184,21 @@ public class CreatePDF extends AppCompatActivity {
         PdfWriter.getInstance(document, output);
         document.open();
 
-        items = data.GetAllItems();
 
         /** ADD CONTENT TO PDF HERE**/
 
         for(int i = 0; i<= items.size(); i++) {
 
             try {
-                img = Image.getInstance(items.get(i).getPictureURL());
+             img = Image.getInstance(items.get(i).getPictureURL());
                 img.setAlt("IMG");
                 img.scaleAbsolute(128, 72);
                 img.setRotationDegrees(-90);
                 line.add(img);
-                line.add(new Chunk("Name: " + items.get(i).getItemName() + "\n"));
                 line.add(new Chunk("Serial Number: " + items.get(i).getSerialNumber() + "\n"));
                 line.add(new Chunk("Product Number: " + items.get(i).getModelNumber() + "\n"));
                 line.add(new Chunk("Room: " + items.get(i).getRoomType() + "\n"));
-
+                line.add(new Chunk("Name: Hello World"));
                 int itemCounter = 1;
                     if (itemCounter == 4) {
                         document.newPage(); // Add a new page once the current page has three items on it.
@@ -213,19 +223,30 @@ public class CreatePDF extends AppCompatActivity {
 
 
     private void sendEmail(){
+        StringBuilder sb = new StringBuilder();
         Intent emailIntent = new Intent(Intent.ACTION_SEND);
 
+        for (Items itms:DataAccessLayer.GetAllItems()
+             ) {
+            sb.append(itms.ItemDetails());
+            sb.append("\n\n");
+        }
+
+
+        String emailBody = "Items Inventory\n\n" +  sb.toString();
         emailIntent.setType("text/plain");
         emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[] {emailAddress.getText().toString()}); // recipients
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Inventory List");
-        emailIntent.putExtra(Intent.EXTRA_TEXT, "User Inventory List");
-        emailIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(pdfFile));
+        emailIntent.putExtra(Intent.EXTRA_TEXT, emailBody);
+        //emailIntent.putExtra(Intent.EXTRA_STREAM, outputFileUri);
 
         Intent chooser = new Intent().createChooser(emailIntent, "Share");
 
         if(emailIntent.resolveActivity(getPackageManager()) != null) {
             startActivity(chooser);
         }
+
+        Log.d("Send Email function", "Email");
     }
 
     private void previewPdf() {
